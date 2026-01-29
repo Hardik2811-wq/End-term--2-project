@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WordPro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles/editor.css">
+  <link rel="stylesheet" href="styles/theme.css">
+</head>
+
+<body>
+
+
+<nav id="navbar" class="navbar">
+  <div class="nav-left">
+    <div class="logo">
+      <i class="fas fa-file-word"></i>
+      <span>WordPro</span>
+    </div>
+    <span id="docTitle" class="doc-title" contenteditable="true">Untitled Document</span>
+  </div>
+  
+  <div class="nav-right">
+    <span id="saveStatus" class="save-status">
+      <i class="fas fa-check-circle"></i> Saved
+    </span>
+    <button id="settingsBtn" class="nav-btn" title="Settings">
+      <i class="fas fa-cog"></i>
+    </button>
+  </div>
+</nav>
+
+
+<header id="toolbar" class="toolbar">
+  <div class="toolbar-section">
+    <button id="newBtn" class="toolbar-btn" title="New Document (Ctrl+N)">
+      <i class="fas fa-file"></i>
+      <span class="btn-label">New</span>
+    </button>
+    <button id="saveBtn" class="toolbar-btn save-btn" title="Save Document (Ctrl+S)">
+      <i class="fas fa-save"></i>
+      <span class="btn-label">Save</span>
+    </button>
+    <button id="loadBtn" class="toolbar-btn" title="Open Document">
+      <i class="fas fa-folder-open"></i>
+      <span class="btn-label">Open</span>
+    </button>
+    <button id="printBtn" class="toolbar-btn" title="Print (Ctrl+P)">
+      <i class="fas fa-print"></i>
+      <span class="btn-label">Print</span>
+    </button>
+    <div class="toolbar-divider"></div>
+  </div>
+
+  <div class="toolbar-section">
+    <button data-cmd="undo" class="toolbar-btn" title="Undo (Ctrl+Z)">
+      <i class="fas fa-undo"></i>
+    </button>
+    <button data-cmd="redo" class="toolbar-btn" title="Redo (Ctrl+Y)">
+      <i class="fas fa-redo"></i>
+    </button>
+    <div class="toolbar-divider"></div>
+  </div>
+
+  <div class="toolbar-section">
+    <select id="fontFamily" class="toolbar-select" title="Font Family">
+      <option value="'Calibri', sans-serif">Calibri</option>
+      <option value="'Times New Roman', serif">Times New Roman</option>
+      <option value="'Georgia', serif">Georgia</option>
+      <option value="'Arial', sans-serif">Arial</option>
+      <option value="'Verdana', sans-serif">Verdana</option>
+      <option value="'Courier New', monospace">Courier New</option>
+    </select>
+
+    <select id="fontSize" class="toolbar-select" title="Font Size">
+      <option value="1">8pt</option>
+      <option value="2">10pt</option>
+      <option value="3" selected>12pt</option>
+      <option value="4">14pt</option>
+      <option value="5">16pt</option>
+      <option value="6">18pt</option>
+      <option value="7">20pt</option>
+    </select>
+
+    <div class="toolbar-divider"></div>
+  </div>
+
+  <div class="toolbar-section">
+    <button data-cmd="bold" class="toolbar-btn" title="Bold (Ctrl+B)">
+      <i class="fas fa-bold"></i>
+    </button>
+    <button data-cmd="italic" class="toolbar-btn" title="Italic (Ctrl+I)">
+      <i class="fas fa-italic"></i>
+    </button>
+    <button data-cmd="underline" class="toolbar-btn" title="Underline (Ctrl+U)">
+      <i class="fas fa-underline"></i>
+    </button>
+    <div class="toolbar-divider"></div>
+  </div>
+
+  <div class="toolbar-section">
+    <div class="color-group">
+      <label for="fontColor" class="color-label" title="Text Color">
+        <i class="fas fa-palette"></i>
+        <input type="color" id="fontColor" class="color-picker" value="#000000">
+      </label>
+    </div>
+
+    <div class="color-group">
+      <label for="highlightColor" class="color-label" title="Highlight Color">
+        <i class="fas fa-highlighter"></i>
+        <input type="color" id="highlightColor" class="color-picker" value="#FFFF00">
+      </label>
+    </div>
+
+    <div class="toolbar-divider"></div>
+  </div>
+
+  <div class="toolbar-section">
+    <button data-cmd="insertUnorderedList" class="toolbar-btn" title="Bullet List">
+      <i class="fas fa-list-ul"></i>
+    </button>
+    <button data-cmd="insertOrderedList" class="toolbar-btn" title="Numbered List">
+      <i class="fas fa-list-ol"></i>
+    </button>
+    <div class="toolbar-divider"></div>
+  </div>
+
+  <div class="toolbar-section">
+    <button data-cmd="justifyLeft" class="toolbar-btn" title="Align Left">
+      <i class="fas fa-align-left"></i>
+    </button>
+    <button data-cmd="justifyCenter" class="toolbar-btn" title="Align Center">
+      <i class="fas fa-align-center"></i>
+    </button>
+    <button data-cmd="justifyRight" class="toolbar-btn" title="Align Right">
+      <i class="fas fa-align-right"></i>
+    </button>
+    <button data-cmd="justifyFull" class="toolbar-btn" title="Justify">
+      <i class="fas fa-align-justify"></i>
+    </button>
+    <div class="toolbar-divider"></div>
+  </div>
+
+  <div class="toolbar-section">
+    <button id="increaseIndent" class="toolbar-btn" title="Increase Indent">
+      <i class="fas fa-indent"></i>
+    </button>
+    <button id="decreaseIndent" class="toolbar-btn" title="Decrease Indent">
+      <i class="fas fa-outdent"></i>
+    </button>
+  </div>
+</header>
+
+
+<div class="main-container">
+  
+  <aside class="sidebar sidebar-left">
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">
+        <i class="fas fa-file-alt"></i> Document
+      </h3>
+      <div class="stats">
+        <div class="stat-item">
+          <span class="stat-label">Words</span>
+          <span id="wordCount" class="stat-value">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Characters</span>
+          <span id="charCount" class="stat-value">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Pages</span>
+          <span id="pageCount" class="stat-value">1</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">
+        <i class="fas fa-palette"></i> Styles
+      </h3>
+      <button class="style-btn" data-style="heading1">
+        <span class="style-preview h1">Heading 1</span>
+      </button>
+      <button class="style-btn" data-style="heading2">
+        <span class="style-preview h2">Heading 2</span>
+      </button>
+      <button class="style-btn" data-style="heading3">
+        <span class="style-preview h3">Heading 3</span>
+      </button>
+      <button class="style-btn" data-style="normal">
+        <span class="style-preview p">Normal Text</span>
+      </button>
+    </div>
+  </aside>
+
+  
+  <main class="editor-container">
+    <div id="page" class="page">
+      <div id="editor" contenteditable="true" spellcheck="true" class="editor">
+        <h1>Welcome to WordPro</h1>
+        <p>Start typing to create your document. Use the toolbar above to format your text.</p>
+      </div>
+    </div>
+  </main>
+
+  
+  <aside class="sidebar sidebar-right">
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">
+        <i class="fas fa-sliders-h"></i> Format
+      </h3>
+      
+      <div class="format-group">
+        <label class="format-label">Line Spacing</label>
+        <select id="lineSpacing" class="format-select">
+          <option value="1">Single</option>
+          <option value="1.5">1.5 lines</option>
+          <option value="2">Double</option>
+        </select>
+      </div>
+
+      <div class="format-group">
+        <label class="format-label">Text Case</label>
+        <div class="case-buttons">
+          <button id="caseUpper" class="case-btn" title="UPPERCASE">AA</button>
+          <button id="caseLower" class="case-btn" title="lowercase">aa</button>
+          <button id="caseSentence" class="case-btn" title="Sentence case">Aa</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">
+        <i class="fas fa-history"></i> Recent
+      </h3>
+      <div id="recentDocs" class="recent-list">
+        <p class="empty-state">No recent documents</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+
+<footer id="statusBar" class="status-bar">
+  <div class="status-left">
+    <span id="cursorPosition" class="status-item">Page 1</span>
+  </div>
+  <div class="status-center">
+    <span id="fileName" class="status-item">Untitled Document</span>
+  </div>
+  <div class="status-right">
+    <span id="zoomLevel" class="status-item">100%</span>
+  </div>
+</footer>
+
+
+<div id="saveDialog" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Save Document</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="text" id="saveFileName" class="form-input" placeholder="Enter document name...">
+    </div>
+    <div class="modal-footer">
+      <button id="saveCancel" class="btn btn-secondary">Cancel</button>
+      <button id="saveConfirm" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Load Dialog -->
+<div id="loadDialog" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Open Document</h2>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div id="documentList" class="document-list">
+        <p class="empty-state">No saved documents</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="loadCancel" class="btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="scripts/editor.js"></script>
+<script src="scripts/toolbar.js"></script>
+<script src="scripts/storage.js"></script>
+<script src="scripts/shortcuts.js"></script>
+<script src="scripts/ui.js"></script>
+
+</body>
+</html>
